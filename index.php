@@ -1,0 +1,83 @@
+<?php
+?><!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101b2d"><title>Stride — Suivi de course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <a class="brand" href="#"><span class="brand-mark">S</span><span>stride<span class="brand-dot">.</span><small>RUNNING JOURNAL</small></span></a>
+    <div class="nav-label">ESPACE COURSE</div>
+    <button class="nav-link active" data-page="dashboard"><span>▦</span> Tableau de bord</button>
+    <button class="nav-link" data-page="entry"><span>＋</span> Saisir une course</button>
+    <div class="side-bottom"><div class="side-note"><span class="pulse"></span> Tes données, chez toi</div><small>Stockage privé · Fichier JSON</small></div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><div><div class="eyebrow" id="top-eyebrow">VUE D'ENSEMBLE</div><h1 id="page-title">Ton évolution, en mouvement.</h1></div><div class="top-actions"><span class="today" id="today"></span><button class="avatar" title="Stride">S</button></div></header>
+    <section id="dashboard-page" class="page">
+      <div class="hero-strip"><div><div class="hero-kicker">TON CARNET DE COURSE</div><h2>Chaque sortie<br>te fait progresser.</h2><p>Observe tes tendances, compare tes efforts et célèbre tes progrès.</p><button class="primary-btn" data-goto="entry">＋ Enregistrer une course</button></div><div class="hero-art"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="hero-number">RUN<span> / LOG</span></div><svg viewBox="0 0 260 150" aria-hidden="true"><path d="M12 117 C45 35 70 130 106 72 S165 24 190 78 S225 111 250 23" fill="none" stroke="#8de0c2" stroke-width="3" stroke-linecap="round"/><circle cx="190" cy="78" r="6" fill="#f7b86b"/></svg></div></div>
+      <div class="section-head"><div><div class="eyebrow">TES INDICATEURS</div><h2>Les chiffres clés</h2></div><span class="muted" id="run-count">0 course enregistrée</span></div>
+      <div class="stats-grid">
+        <article class="stat-card"><div class="stat-top"><span>Distance cumulée</span><span class="stat-icon mint">↗</span></div><div class="stat-value" id="k-distance">0 <small>km</small></div><div class="stat-foot" id="k-distance-foot">Sur l'ensemble des sorties</div></article>
+        <article class="stat-card"><div class="stat-top"><span>Temps en course</span><span class="stat-icon amber">◷</span></div><div class="stat-value" id="k-time">0h00</div><div class="stat-foot">Temps réellement couru</div></article>
+        <article class="stat-card"><div class="stat-top"><span>Meilleure allure</span><span class="stat-icon blue">⚡</span></div><div class="stat-value" id="k-pace">—</div><div class="stat-foot">Minutes par kilomètre</div></article>
+        <article class="stat-card"><div class="stat-top"><span>Dénivelé positif</span><span class="stat-icon violet">⌁</span></div><div class="stat-value" id="k-elev">0 <small>m</small></div><div class="stat-foot">Cumul du dénivelé indiqué</div></article>
+      </div>
+      <div class="content-grid">
+        <article class="panel chart-panel"><div class="panel-head"><div><div class="eyebrow">PROGRESSION</div><h3>Évolution de tes performances</h3></div><select id="chart-metric" class="select"><option value="pace">Allure moyenne</option><option value="distance">Distance</option><option value="speed">Vitesse moyenne</option><option value="hr">Fréquence cardiaque</option><option value="cadence">Cadence moyenne</option><option value="elevation">Dénivelé</option></select></div><div class="chart-legend"><span class="legend-dot"></span><span id="chart-legend-text">Allure moyenne · min/km</span></div><div class="chart-wrap"><svg id="progress-chart" viewBox="0 0 760 250" preserveAspectRatio="none" role="img" aria-label="Graphique de progression"></svg></div><div class="chart-foot"><span id="chart-caption">Tes sorties apparaîtront ici.</span><span class="chart-hint">Chaque point = une course</span></div></article>
+        <article class="panel compare-panel"><div class="eyebrow">COMPARAISON</div><h3>Deux sorties, un regard</h3><p class="muted small">Choisis deux courses pour mesurer l'écart entre elles.</p><label>Course de référence<select id="compare-a" class="select full"></select></label><label>Course à comparer<select id="compare-b" class="select full"></select></label><div id="compare-result" class="compare-result empty">Enregistre au moins deux courses pour commencer.</div></article>
+      </div>
+      <div class="content-grid lower-grid">
+        <article class="panel"><div class="panel-head"><div><div class="eyebrow">HISTORIQUE</div><h3>Dernières sorties</h3></div><button class="text-btn" data-goto="entry">＋ Ajouter</button></div><div class="table-wrap"><table><thead><tr><th>Date</th><th>Lieu</th><th>Distance</th><th>Allure</th><th>Durée</th><th></th></tr></thead><tbody id="recent-body"><tr><td colspan="6" class="empty-cell">Aucune course enregistrée pour le moment.</td></tr></tbody></table></div></article>
+        <article class="panel insights"><div class="eyebrow">RÉGULARITÉ</div><h3>Ton rythme de pratique</h3><div class="streak-number" id="week-runs">0 <small>sortie(s)</small></div><p class="muted small">Sur les 30 derniers jours</p><div class="mini-bars" id="week-bars"></div><div class="insight-foot" id="last-run">Ta prochaine sortie commence ici.</div></article>
+      </div>
+    </section>
+    <section id="entry-page" class="page hidden">
+      <div class="entry-intro"><div><div class="eyebrow">CARNET DE TERRAIN</div><h2 id="form-heading">Enregistrer une sortie</h2><p>Renseigne les données de ta séance. Les champs calculables et les informations du lieu peuvent être préremplis.</p></div><div class="entry-badge">✦ <span>Nouvelle performance</span></div></div>
+      <form id="run-form">
+        <input type="hidden" id="run-id">
+        <div class="form-grid">
+          <section class="form-card span-2"><div class="form-section-title"><span class="section-index">01</span><div><h3>La sortie</h3><p>Quand et où as-tu couru ?</p></div></div><div class="fields three">
+            <label>Date<input type="date" id="date" required></label>
+            <label class="autocomplete-wrap">Lieu<input type="text" id="place" list="place-options" placeholder="Ex. Parc, stade, quartier…" autocomplete="off" required><datalist id="place-options"></datalist><small class="field-help">Les lieux déjà utilisés sont proposés.</small></label>
+            <label>Météo du jour<div class="weather-field"><span id="weather-icon">—</span><input id="weather" type="text" placeholder="Récupération automatique"><button type="button" id="weather-refresh" title="Actualiser la météo">↻</button></div><small class="field-help" id="weather-status">Renseignée à partir du lieu et de la date.</small></label>
+          </div></section>
+          <section class="form-card"><div class="form-section-title"><span class="section-index">02</span><div><h3>Distance & durée</h3><p>Le volume de ta séance</p></div></div><div class="fields two">
+            <label>Distance <span class="unit">km</span><input type="number" id="distance" min="0" step="0.01" placeholder="0.00" required></label>
+            <label>Durée en course <span class="unit">mm:ss</span><input type="text" id="moving-time" placeholder="25:30" pattern="\\d{1,3}:\\d{2}"></label>
+            <label>Durée totale <span class="unit">mm:ss</span><input type="text" id="total-time" placeholder="28:15" pattern="\\d{1,3}:\\d{2}"></label>
+            <label>Nombre de pas <input type="number" id="steps" min="0" step="1" placeholder="Ex. 3 450"></label>
+          </div></section>
+          <section class="form-card"><div class="form-section-title"><span class="section-index">03</span><div><h3>Allure & vitesse</h3><p>Ton intensité de course</p></div></div><div class="fields two">
+            <label>Allure moyenne <span class="unit">min/km</span><input type="text" id="pace" placeholder="5:45"></label>
+            <label>Allure maximale <span class="unit">min/km</span><input type="text" id="max-pace" placeholder="4:30"></label>
+            <label>Vitesse moyenne <span class="unit">km/h</span><input type="number" id="speed" min="0" step="0.01" placeholder="Calculée si vide"></label>
+            <label>Vitesse maximale <span class="unit">km/h</span><input type="number" id="max-speed" min="0" step="0.01" placeholder="Ex. 14.2"></label>
+          </div></section>
+          <section class="form-card"><div class="form-section-title"><span class="section-index">04</span><div><h3>Profil du parcours</h3><p>Altitude et relief</p></div></div><div class="fields two">
+            <label>Dénivelé <span class="unit">m</span><input type="number" id="elevation" step="1" placeholder="0"></label>
+            <label>Point le plus bas <span class="unit">m</span><input type="number" id="alt-low" step="1" placeholder="Altitude"></label>
+            <label>Point le plus haut <span class="unit">m</span><input type="number" id="alt-high" step="1" placeholder="Altitude"></label>
+          </div><div class="auto-note">⌁ Les données d'un lieu déjà connu sont reprises automatiquement. Pour un nouveau lieu, l'altitude indicative est proposée après géolocalisation.</div></section>
+          <section class="form-card"><div class="form-section-title"><span class="section-index">05</span><div><h3>Cardio & cadence</h3><p>Les indicateurs d'effort</p></div></div><div class="fields two">
+            <label>Fréquence cardiaque moyenne <span class="unit">bpm</span><input type="number" id="hr-avg" min="0" step="1" placeholder="Ex. 148"></label>
+            <label>Fréquence cardiaque max <span class="unit">bpm</span><input type="number" id="hr-max" min="0" step="1" placeholder="Ex. 176"></label>
+            <label>Cadence moyenne <span class="unit">ppm</span><input type="number" id="cad-avg" min="0" step="1" placeholder="Ex. 164"></label>
+            <label>Cadence max <span class="unit">ppm</span><input type="number" id="cad-max" min="0" step="1" placeholder="Ex. 178"></label>
+          </div></section>
+          <section class="form-card span-2 laps-card"><div class="form-section-title"><span class="section-index">06</span><div><h3>Tours / kilomètres</h3><p>Un tour par kilomètre, puis le restant éventuel</p></div><button type="button" id="add-lap" class="small-btn">＋ Ajouter un tour</button></div><div class="laps-table-wrap"><table class="laps-table"><thead><tr><th>Tour</th><th>Distance (km)</th><th>Temps (mm:ss)</th><th>FC (bpm)</th><th>Allure (min/km)</th><th></th></tr></thead><tbody id="laps-body"></tbody></table></div><div class="laps-foot"><span id="laps-summary">0 tour renseigné</span><button type="button" id="generate-laps" class="text-btn">Générer les tours selon la distance</button></div></section>
+        </div>
+        <div class="form-actions"><span class="muted small" id="form-status">Les champs météo et altitude nécessitent une connexion Internet.</span><div><button type="button" id="cancel-edit" class="secondary-btn hidden">Annuler</button><button type="submit" class="primary-btn">Enregistrer la course <span>→</span></button></div></div>
+      </form>
+    </section>
+    <footer>STRIDE <span>·</span> Ton parcours, tes données, ta progression.</footer>
+  </main>
+</div>
+<div id="toast" class="toast"></div>
+<script src="assets/app.js"></script>
+</body></html>
